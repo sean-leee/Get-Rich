@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>发家致富</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    
+    .lottery-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+    
+    .lottery-text-item {
+      display: block;
+      padding: 4px;
+      margin:0 20px;
+    }
+    .lottery-text-item:first-child {
+      margin-top: 20px;
+    }
+    .lottery-text-item:last-child {
+      margin-bottom: 20px;
+    }
+    
+    .lottery-text-item span:last-child {
+      margin-left: 20px;
+    }
+    
+    span {
+      display: inline-block;
+      width: 30px;
+      text-align: center;
+    }
+    
+    #lottery-text {
+      background-color: rgba(255, 255, 255, .7);
+      border-radius: 4px;
+      border: 1px solid #cccccc;
+      /*box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)*/
+    }
+    
+    .lottery-controler {
+      display: flex;
+      align-items: center;
+    }
+    
+    #lottery-input {
+      width: 50px;
+    }
+    
+    input {
+      -webkit-appearance: none;
+      background-color: #fff;
+      background-image: none;
+      border-radius: 4px;
+      border: 1px solid #dcdfe6;
+      box-sizing: border-box;
+      color: #606266;
+      display: inline-block;
+      font-size: inherit;
+      height: 40px;
+      line-height: 40px;
+      outline: none;
+      margin: auto 4px;
+      padding: 0 15px;
+      transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+      width: 120px;
+    }
+    
+    select {
+      background-color: #fff;
+      background-image: none;
+      border-radius: 4px;
+      border: 1px solid #dcdfe6;
+      box-sizing: border-box;
+      color: #606266;
+      display: inline-block;
+      font-size: inherit;
+      height: 40px;
+      line-height: 40px;
+      outline: none;
+      padding: 0 15px;
+      transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+      width: 100%;
+    }
+    
+    button {
+      display: inline-block;
+      line-height: 1;
+      white-space: nowrap;
+      cursor: pointer;
+      color: #fff;
+      background-color: #409eff;
+      border: none;
+      -webkit-appearance: none;
+      text-align: center;
+      box-sizing: border-box;
+      outline: none;
+      margin: 10px;
+      transition: .1s;
+      font-weight: 500;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      padding: 12px 20px;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+    
+    button:hover {
+      background: #66b1ff;
+      border-color: #66b1ff;
+      color: #fff;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button{
+      -webkit-appearance: none !important;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="lottery-container">
+  <div id="lottery-text"></div>
+  <div class="lottery-controler">
+    占卜
+    <input type="number" id="lottery-input" value="1" min="1" max="10"/>
+    注
+    <input placeholder="填个人祭天" />
+    <button onclick="handle()">注入灵魂</button>
+  </div>
+  <div id="test">
+  </div>
+</div>
+</body>
+</html>
+<script>
+  var pond1 = [],
+    pond2 = [];
+  for (var i = 1; i <= 33; i ++) {
+    pond1.push(i);
+  }
+  pond1 = pond1.join(',');
+  
+  function handle() {
+    var num = document.getElementById('lottery-input').value;
+    if (num > 10) {
+			document.getElementById('lottery-input').value = 10;
+			num = 10;
+    }
+    if (num < 1){
+			document.getElementById('lottery-input').value = 1;
+			num = 1;
+    }
+    var html = '';
+    for (var i = 0; i < num; i++) {
+      html += '<div class="lottery-text-item">';
+      var arr = randomHandle(33, 6);
+      for (var j = 0; j < arr.length; j++) {
+        html += '<span>' + arr[j] + '</span>';
+      }
+      html += '<span>' + randomHandle(16, 1)[0] + '</span>';
+      html += '</div>';
+    }
+    document.getElementById('lottery-text').innerHTML = html;
+  }
+
+  function randomHandle(max, len) {
+    var arr1 = pond1.split(',');
+    arr1.length = max;
+    arr1.sort(function () {
+      return 0.5 - Math.random();
+    });
+    arr1.length = len;
+    arr1.sort(function (a, b) {
+      return a - b;
+    });
+    return arr1;
+  }
+</script>
